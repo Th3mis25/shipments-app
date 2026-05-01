@@ -3,83 +3,91 @@ document.addEventListener('DOMContentLoaded', function () {
     const range = 'General!A2:V';
     const apiKey = 'AIzaSyBLc0GihCS__XvYbwoaA-f-GRlGnqOI-zY';
 
+    const tableBody = document.querySelector('#embarquesTable tbody');
+    const modal = document.getElementById('shipment-modal');
+    const openModalBtn = document.getElementById('add-shipment-btn');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const shipmentForm = document.getElementById('shipment-form');
+    const formError = document.getElementById('form-error');
+
+    const fieldIds = [
+        'trip', 'trailer', 'client', 'reference', 'origin', 'destination', 'tr-mx', 'tr-usa', 'gps', 'loading',
+        'arrival-shipper', 'departure-plant', 'arrival-nld', 'nld-departure', 'delivery-appointment', 'eta',
+        'arrival-destination', 'departure-destination', 'status', 'location', 'empty', 'notes'
+    ];
+
     window.showView = function (viewId) {
         document.querySelectorAll('.view').forEach(view => {
             view.style.display = view.id === viewId ? 'block' : 'none';
         });
     };
 
+    function addRowToTable(rowData) {
+        const newRow = tableBody.insertRow();
+        for (let i = 0; i < 22; i += 1) {
+            const newCell = newRow.insertCell();
+            newCell.textContent = rowData[i] || '';
+        }
+    }
+
+    function openModal() {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
     fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`)
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             return response.json();
         })
         .then(data => {
-            if (!data.values) {
-                console.error('No se encontraron datos en la respuesta');
-                return;
-            }
-
-            const table = document.getElementById('embarquesTable').getElementsByTagName('tbody')[0];
-            data.values.forEach(row => {
-                const newRow = table.insertRow();
-                row.forEach(cell => {
-                    const newCell = newRow.insertCell();
-                    newCell.textContent = cell;
-                });
-            });
+            if (!data.values) return;
+            data.values.forEach(addRowToTable);
         })
-        .catch(error => console.error('Error al cargar los datos:', error));
+        .catch(error => console.error('Error loading data:', error));
 
     function addNewRecordToSheet(recordData) {
-        const apiEndpoint = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/General!A2:V:append?valueInputOption=RAW&key=${apiKey}`;
-        const requestData = {
-            range: 'General!A2:V',
-            majorDimension: 'ROWS',
-            values: [recordData]
-        };
-
-        fetch(apiEndpoint, {
+        const apiEndpoint = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW&key=${apiKey}`;
+        return fetch(apiEndpoint, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestData)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(() => {
-                alert('Record added successfully!');
-            })
-            .catch(error => {
-                console.error('Error al agregar el registro:', error);
-            });
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ range, majorDimension: 'ROWS', values: [recordData] })
+        }).then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.json();
+        });
     }
 
-    const shipmentForm = document.getElementById('shipment-form');
+    openModalBtn.addEventListener('click', openModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (event) {
+        if (event.target === modal) closeModal();
+    });
+
     shipmentForm.addEventListener('submit', function (event) {
         event.preventDefault();
+        formError.textContent = '';
 
-        const newRecord = [
-            document.getElementById('trip').value,
-            document.getElementById('trailer').value,
-            document.getElementById('client').value,
-            document.getElementById('reference').value,
-            document.getElementById('origin').value,
-            document.getElementById('destination').value,
-            document.getElementById('tr-mx').value,
-            document.getElementById('tr-usa').value,
-            document.getElementById('gps').value,
-            document.getElementById('loading').value
-        ];
+        if (!shipmentForm.checkValidity()) {
+            formError.textContent = 'Please fill out all required fields.';
+            shipmentForm.reportValidity();
+            return;
+        }
 
-        addNewRecordToSheet(newRecord);
+        const newRecord = fieldIds.map(id => document.getElementById(id).value.trim());
+
+        addRowToTable(newRecord);
+        addNewRecordToSheet(newRecord).catch(error => {
+            console.error('Error adding record to sheet:', error);
+            formError.textContent = 'Saved in table, but failed to sync with Google Sheets.';
+        });
+
         shipmentForm.reset();
+        closeModal();
     });
 });
