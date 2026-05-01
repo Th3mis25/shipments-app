@@ -6,7 +6,7 @@ th { background: #4CAF50; color: #fff; }
 
 .add-record-button {
   position: fixed;
-  top: 20px;
+  bottom: 24px;
   right: 20px;
   width: 56px;
   height: 56px;
@@ -22,6 +22,7 @@ th { background: #4CAF50; color: #fff; }
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform .15s ease, background-color .2s ease;
+  z-index: 1100;
 }
 
 .add-record-button:hover {
@@ -36,6 +37,7 @@ th { background: #4CAF50; color: #fff; }
   opacity: 0;
   pointer-events: none;
   transition: opacity .2s ease;
+  z-index: 1200;
 }
 .panel-overlay.open { opacity: 1; pointer-events: auto; }
 
@@ -51,6 +53,7 @@ th { background: #4CAF50; color: #fff; }
   transition: transform .25s ease;
   padding: 16px;
   overflow-y: auto;
+  z-index: 1300;
 }
 .slide-panel.open { transform: translateX(0); }
 
