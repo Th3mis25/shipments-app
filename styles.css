@@ -14,133 +14,98 @@ body {
     position: fixed;
 }
 
-#sidebar h2 {
-    text-align: center;
-    font-size: 1.5em;
-}
+#sidebar h2 { text-align: center; font-size: 1.5em; }
+#sidebar ul { list-style: none; padding: 0; }
+#sidebar ul li { margin: 20px 0; text-align: center; }
+#sidebar ul li a { color: white; font-size: 18px; text-decoration: none; }
 
-#sidebar ul {
-    list-style: none;
-    padding: 0;
-}
+#main-content { margin-left: 240px; padding: 20px; width: calc(100% - 240px); }
+.view { display: none; }
+#view1 { display: block; }
+h1 { font-size: 2em; margin-bottom: 20px; text-align: center; }
 
-#sidebar ul li {
-    margin: 20px 0;
-    text-align: center;
-}
+table { width: 100%; border-collapse: collapse; table-layout: auto; margin-top: 20px; }
+th, td { padding: 12px; text-align: left; border: 1px solid #ddd; white-space: nowrap; }
+th { background-color: #4CAF50; color: white; }
+td { background-color: #f9f9f9; }
 
-#sidebar ul li a {
-    color: white;
-    font-size: 18px;
-    text-decoration: none;
-}
+#embarquesTable { display: block; overflow-x: auto; white-space: nowrap; width: 100%; }
 
-#main-content {
-    margin-left: 240px;
-    padding: 20px;
-    width: calc(100% - 240px);
-}
-
-.view {
-    display: none;
-}
-
-#view1 {
-    display: block;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-h3 {
-    font-size: 1.8em;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: auto;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-    white-space: nowrap;
-}
-
-th {
-    background-color: #4CAF50;
-    color: white;
-}
-
-td {
-    background-color: #f9f9f9;
-}
-
-#shipment-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-#shipment-form input {
-    width: 45%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-#shipment-form button {
-    width: 100%;
-    padding: 12px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-#shipment-form button:hover {
-    background-color: #45a049;
-}
-
-/* Agregar desplazamiento horizontal si es necesario */
-#embarquesTable {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    width: 100%;
-}
-
-/* Estilo para el botón de agregar */
 .add-button {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 1001;
     background-color: #4CAF50;
     color: white;
-    font-size: 24px;
-    width: 50px;
-    height: 50px;
+    font-size: 30px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     border: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
-.add-button:hover {
-    background-color: #45a049;
+.add-button:hover { background-color: #45a049; }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
+
+.modal.is-open { display: flex; }
+
+.modal-content {
+    background: #fff;
+    width: min(960px, 95vw);
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 10px;
+    padding: 24px;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+#shipment-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.save-button {
+    margin-top: 14px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.save-button:hover { background-color: #45a049; }
+.form-error { color: #b00020; min-height: 20px; margin: 10px 0 0; }

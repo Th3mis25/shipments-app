@@ -16,8 +16,7 @@
 
     <div id="main-content">
         <h1>Shipment Tracking</h1>
-        
-        <!-- Vista con la tabla -->
+
         <div id="view1" class="view">
             <table id="embarquesTable">
                 <thead>
@@ -48,6 +47,43 @@
                 </thead>
                 <tbody></tbody>
             </table>
+        </div>
+    </div>
+
+    <button id="add-shipment-btn" class="add-button" type="button" aria-label="Add shipment">+</button>
+
+    <div id="shipment-modal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <button id="close-modal-btn" class="close-modal" type="button" aria-label="Close modal">&times;</button>
+            <h2>Add Shipment Record</h2>
+            <form id="shipment-form" novalidate>
+                <div class="form-grid">
+                    <input id="trip" placeholder="Trip" required>
+                    <input id="trailer" placeholder="Trailer" required>
+                    <input id="client" placeholder="Client" required>
+                    <input id="reference" placeholder="Reference or BL" required>
+                    <input id="origin" placeholder="Origin" required>
+                    <input id="destination" placeholder="Destination" required>
+                    <input id="tr-mx" placeholder="TR-MX">
+                    <input id="tr-usa" placeholder="TR-USA">
+                    <input id="gps" placeholder="GPS or Tracking Link">
+                    <input id="loading" placeholder="Loading Appointment">
+                    <input id="arrival-shipper" placeholder="Arrival at Shipper">
+                    <input id="departure-plant" placeholder="Departure from Plant">
+                    <input id="arrival-nld" placeholder="Arrival at NLD">
+                    <input id="nld-departure" placeholder="NLD Departure (Border Crossing)">
+                    <input id="delivery-appointment" placeholder="Delivery Appointment">
+                    <input id="eta" placeholder="ETA">
+                    <input id="arrival-destination" placeholder="Arrival at Destination">
+                    <input id="departure-destination" placeholder="Departure from Destination">
+                    <input id="status" placeholder="Current Status" required>
+                    <input id="location" placeholder="Current Location">
+                    <input id="empty" placeholder="Empty">
+                    <input id="notes" placeholder="Notes / Additional Info">
+                </div>
+                <p id="form-error" class="form-error" aria-live="polite"></p>
+                <button type="submit" class="save-button">Guardar</button>
+            </form>
         </div>
     </div>
 
