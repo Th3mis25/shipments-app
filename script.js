@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const spreadsheetId = '1ktiGku1avu7upJ8WcD1k9WVn7t7Djz0EQEAd4I1_1W0';
     const range = 'General!A2:V';
     const apiKey = 'AIzaSyBLc0GihCS__XvYbwoaA-f-GRlGnqOI-zY';
+const appsScriptUrl = 'https://script.google.com/a/macros/tmtransportation.us/s/AKfycbwRGB3dZgJgnf2hIkU3PqGLIbgoPnUdukS6gqOiLCJ1GO9s1oW7f99mERIDWM-na2qV/exec';
 
     const tableBody = document.querySelector('#embarquesTable tbody');
     const modal = document.getElementById('shipment-modal');
@@ -52,11 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error loading data:', error));
 
     function addNewRecordToSheet(recordData) {
-        const apiEndpoint = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW&key=${apiKey}`;
-        return fetch(apiEndpoint, {
+        return fetch(appsScriptUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ range, majorDimension: 'ROWS', values: [recordData] })
+            body: JSON.stringify({ values: [recordData] })
         }).then(response => {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             return response.json();

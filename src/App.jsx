@@ -4,6 +4,7 @@ import ShipmentList from './ShipmentList';
 const spreadsheetId = '1ktiGku1avu7upJ8WcD1k9WVn7t7Djz0EQEAd4I1_1W0';
 const range = 'General!A2:V';
 const apiKey = 'AIzaSyBLc0GihCS__XvYbwoaA-f-GRlGnqOI-zY';
+const appsScriptUrl = 'https://script.google.com/a/macros/tmtransportation.us/s/AKfycbwRGB3dZgJgnf2hIkU3PqGLIbgoPnUdukS6gqOiLCJ1GO9s1oW7f99mERIDWM-na2qV/exec';
 
 export default function App() {
   const [shipments, setShipments] = useState([]);
@@ -21,17 +22,13 @@ export default function App() {
 
   const createShipment = async (recordData) => {
     setIsCreating(true);
-    const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/General!A2:V:append?valueInputOption=RAW&key=${apiKey}`;
+    const endpoint = appsScriptUrl;
 
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          range: 'General!A2:V',
-          majorDimension: 'ROWS',
-          values: [recordData]
-        })
+        body: JSON.stringify({ values: [recordData] })
       });
 
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
