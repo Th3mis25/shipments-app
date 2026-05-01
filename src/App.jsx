@@ -4,7 +4,7 @@ import ShipmentList from './ShipmentList';
 const spreadsheetId = '1ktiGku1avu7upJ8WcD1k9WVn7t7Djz0EQEAd4I1_1W0';
 const range = 'General!A2:V';
 const apiKey = 'AIzaSyBLc0GihCS__XvYbwoaA-f-GRlGnqOI-zY';
-const appsScriptUrl = 'https://script.google.com/a/macros/tmtransportation.us/s/AKfycbwRGB3dZgJgnf2hIkU3PqGLIbgoPnUdukS6gqOiLCJ1GO9s1oW7f99mERIDWM-na2qV/exec';
+const appsScriptUrl = 'https://script.google.com/a/macros/tmtransportation.us/s/AKfycbzWoPG8t6LpwJP8T84c3qZ4SduVSH4HWex3Wt1e5nuiK__rSOWX0fT4ifcrEBhm-bXw/exec';
 
 export default function App() {
   const [shipments, setShipments] = useState([]);
