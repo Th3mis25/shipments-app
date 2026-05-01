@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipment Tracking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="#" onclick="showView('view1')">Shipment Table</a></li>
+            <li><a href="#" onclick="showView('view2')">Add New Record</a></li>
+        </ul>
+    </div>
+
+    <div id="main-content">
+        <h1>Shipment Tracking</h1>
+        
+        <!-- Formulario para agregar registros -->
+        <div id="view2" class="view">
+            <h3>Add New Record</h3>
+            <form id="shipment-form">
+                <input type="text" id="trip" placeholder="Trip" required>
+                <input type="text" id="trailer" placeholder="Trailer" required>
+                <input type="text" id="client" placeholder="Client" required>
+                <input type="text" id="reference" placeholder="Reference or BL" required>
+                <input type="text" id="origin" placeholder="Origin" required>
+                <input type="text" id="destination" placeholder="Destination" required>
+                <input type="text" id="tr-mx" placeholder="TR-MX" required>
+                <input type="text" id="tr-usa" placeholder="TR-USA" required>
+                <input type="text" id="gps" placeholder="GPS or Tracking Link" required>
+                <input type="text" id="loading" placeholder="Loading Appointment" required>
+                <button type="submit" id="submit-btn">Add Record</button>
+            </form>
+        </div>
+        
+        <!-- Vista con la tabla -->
+        <div id="view1" class="view">
+            <table id="embarquesTable">
+                <thead>
+                    <tr>
+                        <th>Trip</th>
+                        <th>Trailer</th>
+                        <th>Client</th>
+                        <th>Reference or BL</th>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>TR-MX</th>
+                        <th>TR-USA</th>
+                        <th>GPS or Tracking Link</th>
+                        <th>Loading Appointment</th>
+                        <th>Arrival at Shipper</th>
+                        <th>Departure from Plant</th>
+                        <th>Arrival at NLD</th>
+                        <th>NLD Departure (Border Crossing)</th>
+                        <th>Delivery Appointment</th>
+                        <th>ETA</th>
+                        <th>Arrival at Destination</th>
+                        <th>Departure from Destination</th>
+                        <th>Current Status</th>
+                        <th>Current Location</th>
+                        <th>Empty</th>
+                        <th>Notes / Additional Info</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
